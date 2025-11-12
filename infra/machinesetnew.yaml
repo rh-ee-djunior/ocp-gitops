@@ -1,18 +1,25 @@
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
+metadata:
+  annotations:
+    machine.openshift.io/memoryMb: '32768'
+    machine.openshift.io/vCPU: '16'
+  resourceVersion: '25800'
+  name: djunior-ddr77-worker-0
+  managedFields:
   namespace: openshift-machine-api
   labels:
     machine.openshift.io/cluster-api-cluster: djunior-ddr77
 spec:
-  replicas: 0
+  replicas: 3
   selector:
     matchLabels:
-      machine.openshift.io/cluster-api-cluster: djunior-ddr77-new
+      machine.openshift.io/cluster-api-cluster: djunior-ddr77
       machine.openshift.io/cluster-api-machineset: djunior-ddr77-worker-0
   template:
     metadata:
       labels:
-        machine.openshift.io/cluster-api-cluster: djunior-ddr77-new
+        machine.openshift.io/cluster-api-cluster: djunior-ddr77
         machine.openshift.io/cluster-api-machine-role: worker
         machine.openshift.io/cluster-api-machine-type: worker
         machine.openshift.io/cluster-api-machineset: djunior-ddr77-worker-0
@@ -44,3 +51,9 @@ spec:
             server: vcsa.vmware.tamlab.rdu2.redhat.com
           template: djunior-ddr77-rhcos-generated-region-generated-zone
           apiVersion: machine.openshift.io/v1beta1
+status:
+  availableReplicas: 3
+  fullyLabeledReplicas: 3
+  observedGeneration: 1
+  readyReplicas: 3
+  replicas: 3
