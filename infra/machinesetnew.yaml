@@ -1,0 +1,46 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+  namespace: openshift-machine-api
+  labels:
+    machine.openshift.io/cluster-api-cluster: djunior-ddr77
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: djunior-ddr77-new
+      machine.openshift.io/cluster-api-machineset: djunior-ddr77-worker-0
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: djunior-ddr77-new
+        machine.openshift.io/cluster-api-machine-role: worker
+        machine.openshift.io/cluster-api-machine-type: worker
+        machine.openshift.io/cluster-api-machineset: djunior-ddr77-worker-0
+    spec:
+      lifecycleHooks: {}
+      metadata: {}
+      providerSpec:
+        value:
+          numCoresPerSocket: 8
+          diskGiB: 120
+          snapshot: ''
+          userDataSecret:
+            name: worker-user-data
+          memoryMiB: 32768
+          credentialsSecret:
+            name: vsphere-cloud-credentials
+          network:
+            devices:
+              - networkName: TAMLAB_193
+          metadata:
+            creationTimestamp: null
+          numCPUs: 16
+          kind: VSphereMachineProviderSpec
+          workspace:
+            datacenter: Datacenter
+            datastore: /Datacenter/datastore/vsanDatastore
+            folder: /Datacenter/vm/djunior-ddr77
+            resourcePool: /Datacenter/host/tamlab/Resources
+            server: vcsa.vmware.tamlab.rdu2.redhat.com
+          template: djunior-ddr77-rhcos-generated-region-generated-zone
+          apiVersion: machine.openshift.io/v1beta1
